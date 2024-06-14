@@ -3,29 +3,47 @@ const HOST = import.meta.env.VITE_BACK_URL
 class AuthService {
     async login({ email, password }) {
         try {
-            const response = await axios.post(`${HOST}/api/users/login`, {
-                email,
-                password
+            const response = await fetch(`${HOST}/api/users/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
             });
 
-            const token = response.data.token;
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+            const token = data.token;
             return token;
         } catch (error) {
-            throw new Error('Login failed:', error);
+            throw new Error('Login failed:', error.message);
         }
     }
 
-    async signup({ email, verificationCode }) {
+    async signup(email, verificationCode) {
         try {
-            const response = await axios.post(`${HOST}/api/verify`, {
-                email: email,
-                verificationCode: verificationCode
+            const response = await fetch(`${HOST}/api/verify`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    verificationCode
+                })
             });
 
-            const token = response.data.token;
-            return token;
+            if (!response.ok) {
+                throw new Error('Signup failed');
+            }
+
+            const data = await response;
+            return data;
         } catch (error) {
-            throw new Error('Signup failed:', error);
+            throw new Error('Signup failed:', error.message);
         }
     }
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import AuthService from "../services/AuthService";
 
@@ -42,7 +41,7 @@ const RegistrationForm = () => {
 
         try {
             const signUpResponse = await AuthService.signup(formData.email, verificationCode);
-            console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse.data);
+            console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
             handleNextClick()
         } catch (error) {
             console.error(`Error sending verification code to ${formData.email}:`, error);
