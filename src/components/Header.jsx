@@ -44,9 +44,9 @@ const Header = () => {
                 </div>
                 <div className=" relative flex flex-col px-40 space-y-5">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    Faly izahay mandray anao eto amin'ny lampihazo.Tongasoa eto amintsika!
                     </p>
-                    <button className="btn rounded-2xl text-xl">Ready</button>
+                    <button className="btn rounded-2xl">Hiditra</button>
                 </div>
             </div>
         </div>
