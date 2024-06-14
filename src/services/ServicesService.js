@@ -10,18 +10,29 @@ class ServicesService {
         }
     }
 
-    async submitForService(data, endpoint) {
+    async submitForService(data, endpoint, service_id, user_id) {
         try {
             const url = `${HOST}${endpoint}`;
-            const response = await fetch(url, {
+            const responseService = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             });
-            console.log(response);
+
+            await responseService.json();
+
+            const response = await fetch(`${HOST}/api/user-services/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: user_id, serviceId: service_id }),
+            });
+
             return response.json();
+
         } catch (error) {
             throw new Error('Failed to submit service:', error.message);
         }
