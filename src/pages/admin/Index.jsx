@@ -1,9 +1,12 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Outlet, Link } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const Index = () => {
+    const queryClient = new QueryClient();
     const location = useLocation();
+
     return (
         <div className='grid grid-cols-8'>
             <div className='col-span-1 space-y-28 shadow-lg h-screen'>
@@ -26,8 +29,10 @@ const Index = () => {
                     </Link>
                 </div>
             </div>
-            <div className='col-span-7 p-4'>
-                <Outlet />
+            <div className='col-span-7 p-8'>
+                <QueryClientProvider client={queryClient}>
+                    <Outlet />
+                </QueryClientProvider>
             </div>
         </div>
     )
