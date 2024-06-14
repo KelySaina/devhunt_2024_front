@@ -1,7 +1,7 @@
 const HOST = import.meta.env.VITE_BACK_URL
 
 class AuthService {
-    async login({ email, password }) {
+    async login(email, password) {
         try {
             const response = await fetch(`${HOST}/api/users/login`, {
                 method: 'POST',
