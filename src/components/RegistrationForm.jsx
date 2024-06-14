@@ -1,23 +1,28 @@
 import { useState } from "react";
 import AuthService from "../services/AuthService";
+import { useRef } from "react";
+import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
-    const [step, setStep] = useState(1); // Track current step of the registration process
+    const [step, setStep] = useState(1);
+    const userCode = useRef();
 
     const [formData, setFormData] = useState({
-        first_name: "",
-        last_name: "",
-        birthdate: "",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
         email: "",
         password: "",
-        confirm_password: ""
+        confirm_password: "",
+        username: ""
     });
 
     const [verificationCode, setVerificationCode] = useState('');
 
     const generateVerificationCode = () => {
-        const code = Math.floor(100000 + Math.random() * 900000); // Generate random number between 100000 and 999999
-        setVerificationCode(code.toString()); // Convert to string and set state
+        const code = Math.floor(100000 + Math.random() * 900000);
+        setVerificationCode(code.toString());
     };
 
     const handleInputChange = (event) => {
@@ -37,21 +42,31 @@ const RegistrationForm = () => {
     };
 
     const handleVerification = async () => {
-        generateVerificationCode(); // Generate the verification code synchronously
+        generateVerificationCode();
 
         try {
-            const signUpResponse = await AuthService.signup(formData.email, verificationCode);
+            const signUpResponse = await AuthService.signupVerify(formData.email, verificationCode);
             console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
             handleNextClick()
         } catch (error) {
             console.error(`Error sending verification code to ${formData.email}:`, error);
-            // Handle error scenarios
         }
     };
 
-    const handleSubmit = () => {
-        // Handle form submission logic, e.g., send data to backend
-        console.log("Form submitted with data:", formData);
+    const navigate = useNavigate();
+    const handleSubmit = async () => {
+        const code = userCode.current.value;
+        if (code === verificationCode) {
+            try {
+                await AuthService.signup(formData);
+                toast.success('Compte créé avec succès');
+                navigate('/admin');
+            } catch (error) {
+                toast.error('Erreur lors de la création du compte');
+            }
+        } else {
+            toast.error('Code de vérification incorrect');
+        }
     };
 
     return (
@@ -61,17 +76,17 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="first_name">Nom</label>
-                            <input onChange={handleInputChange} value={formData.first_name} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="first_name" type="text" placeholder="RANAIVOSON" />
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Nom</label>
+                            <input onChange={handleInputChange} value={formData.firstName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="firstName" type="text" placeholder="RANAIVOSON" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="last_name">Prénoms</label>
-                            <input onChange={handleInputChange} value={formData.last_name} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="last_name" type="text" placeholder="Muriel" />
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Prénoms</label>
+                            <input onChange={handleInputChange} value={formData.lastName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="lastName" type="text" placeholder="Muriel" />
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="birthdate">Date de naissance</label>
-                        <input onChange={handleInputChange} value={formData.birthdate} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="birthdate" type="date" />
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Date de naissance</label>
+                        <input onChange={handleInputChange} value={formData.dateOfBirth} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="dateOfBirth" type="date" />
                     </div>
                     <div className="flex justify-end mt-8">
                         <button className="btn btn-success text-white rounded-full w-28" onClick={handleNextClick}>Suivant</button>
@@ -80,9 +95,15 @@ const RegistrationForm = () => {
             )}
             {step === 2 && (
                 <div className="py-4 px-8">
-                    <div className="mb-8">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Email</label>
-                        <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
+                    <div className="grid grid-cols-2 gap-2">
+                        <div className="mb-8">
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Username</label>
+                            <input onChange={handleInputChange} value={formData.username} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="MurielArii" />
+                        </div>
+                        <div className="mb-8">
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Email</label>
+                            <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
+                        </div>
                     </div>
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
@@ -104,7 +125,7 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="mb-8">
                         <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email_final">Code de vérification</label>
-                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email_final" type="number" />
+                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" ref={userCode} type="number" />
                     </div>
                     <div className="flex justify-end mt-8">
                         <button className="btn btn-success text-white rounded-full w-28" onClick={handleSubmit}>Valider</button>
