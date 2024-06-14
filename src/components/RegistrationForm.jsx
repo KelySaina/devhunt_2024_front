@@ -5,8 +5,8 @@ const RegistrationForm = () => {
     const [nextUp2, setNextUp2] = useState(false);
 
     return (
-        <div className="card space-y-8">
-            <h1 className="text-4xl text-center">Create Account</h1>
+        <div className=" space-y-8">
+            <h1 className="text-4xl text-center text-success">Create Account</h1>
             {
                 !nextUp && !nextUp2 ? (
                     <div className="py-4 px-8">
