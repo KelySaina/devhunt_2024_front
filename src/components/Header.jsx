@@ -4,8 +4,8 @@ const Header = () => {
         <div className="grid grid-cols-2">
             <div className="flex flex-col justify-center space-y-5 mx-16">
                 <div className='space-y-1'>
-                    <h1 className="text-4xl">We Collect</h1>
-                    <h1 className="text-4xl">High Quality Leads</h1>
+                    <h1 className="text-4xl">Tongasoa</h1>
+                    <h1 className="text-4xl">Eto amin'ny CitizenConnect</h1>
                 </div>
                 <div className="space-y-1">
                     <p>
