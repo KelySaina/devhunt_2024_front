@@ -2,6 +2,7 @@ import { useState } from "react";
 import AuthService from "../services/AuthService";
 import { useRef } from "react";
 import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
     const [step, setStep] = useState(1);
@@ -52,12 +53,14 @@ const RegistrationForm = () => {
         }
     };
 
+    const navigate = useNavigate();
     const handleSubmit = async () => {
         const code = userCode.current.value;
         if (code === verificationCode) {
             try {
                 await AuthService.signup(formData);
                 toast.success('Compte créé avec succès');
+                navigate('/admin');
             } catch (error) {
                 toast.error('Erreur lors de la création du compte');
             }
