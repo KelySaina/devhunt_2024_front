@@ -1,10 +1,12 @@
 import Header from "../components/Header";
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar";
+import Service from "../components/Service"
 const Landing = () => {
     return (
-    <div className="h-screen">
+    <div>
        <Navbar /> 
        <Header />
+       <Service />
     </div>
 )
 }
