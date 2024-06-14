@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import AuthService from "../services/AuthService";
 
 const RegistrationForm = () => {
     const [step, setStep] = useState(1); // Track current step of the registration process
@@ -40,14 +41,8 @@ const RegistrationForm = () => {
         generateVerificationCode(); // Generate the verification code synchronously
 
         try {
-            const HOST = import.meta.env.VITE_BACK_URL
-            const response = await axios.post(`${HOST}/api/verify`, {
-                email: formData.email,
-                verificationCode: verificationCode
-            });
-
-            console.log(`Verification code sent successfully to ${formData.email}:`, response.data);
-            // Handle response or further actions as needed
+            const signUpResponse = await AuthService.signup(formData.email, verificationCode);
+            console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse.data);
             handleNextClick()
         } catch (error) {
             console.error(`Error sending verification code to ${formData.email}:`, error);

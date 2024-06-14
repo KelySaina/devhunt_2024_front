@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import AuthService from "../services/AuthService";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -15,18 +16,10 @@ const LoginForm = () => {
 
     const login = async () => {
         try {
-            const HOST = import.meta.env.VITE_BACK_URL
-            const response = await axios.post(`${HOST}/api/users/login`, {
-                email,
-                password
-            });
-            const token = response.data.token; // Assuming your backend returns a token
-
-            // Handle token storage or further actions here (e.g., redirect)
-            console.log("Login successful. Token:", token);
+            const loginResponse = await AuthService.login(email, password);
+            console.log("Login successful. Token:", loginResponse);
         } catch (error) {
             console.error('Login failed:', error);
-            // Handle error (e.g., show error message to user)
         }
     };
 
