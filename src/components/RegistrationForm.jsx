@@ -1,8 +1,11 @@
 import { useState } from "react";
 import AuthService from "../services/AuthService";
+import { useRef } from "react";
+import toast from 'react-hot-toast';
 
 const RegistrationForm = () => {
-    const [step, setStep] = useState(1); // Track current step of the registration process
+    const [step, setStep] = useState(1);
+    const userCode = useRef();
 
     const [formData, setFormData] = useState({
         first_name: "",
@@ -16,8 +19,8 @@ const RegistrationForm = () => {
     const [verificationCode, setVerificationCode] = useState('');
 
     const generateVerificationCode = () => {
-        const code = Math.floor(100000 + Math.random() * 900000); // Generate random number between 100000 and 999999
-        setVerificationCode(code.toString()); // Convert to string and set state
+        const code = Math.floor(100000 + Math.random() * 900000);
+        setVerificationCode(code.toString());
     };
 
     const handleInputChange = (event) => {
@@ -37,7 +40,7 @@ const RegistrationForm = () => {
     };
 
     const handleVerification = async () => {
-        generateVerificationCode(); // Generate the verification code synchronously
+        generateVerificationCode();
 
         try {
             const signUpResponse = await AuthService.signup(formData.email, verificationCode);
@@ -45,13 +48,16 @@ const RegistrationForm = () => {
             handleNextClick()
         } catch (error) {
             console.error(`Error sending verification code to ${formData.email}:`, error);
-            // Handle error scenarios
         }
     };
 
     const handleSubmit = () => {
-        // Handle form submission logic, e.g., send data to backend
-        console.log("Form submitted with data:", formData);
+        const code = userCode.current.value;
+        if (code === verificationCode) {
+            console.log("Form submitted with data:", formData);
+        } else {
+            toast.error('Code de vérification incorrect');
+        }
     };
 
     return (
@@ -104,7 +110,7 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="mb-8">
                         <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email_final">Code de vérification</label>
-                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email_final" type="number" />
+                        <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" ref={userCode} type="number" />
                     </div>
                     <div className="flex justify-end mt-8">
                         <button className="btn btn-success text-white rounded-full w-28" onClick={handleSubmit}>Valider</button>
