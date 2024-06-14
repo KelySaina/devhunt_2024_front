@@ -6,6 +6,8 @@ import { Toaster } from 'react-hot-toast';
 import Index from "./pages/admin/Index";
 import Service from "./pages/admin/Service";
 import Setting from "./pages/admin/Setting";
+import ServiceAdd from "./pages/admin/ServiceAdd";
+import Documents from "./pages/admin/Documents";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/admin" element={<Index />}>
             <Route path="setting" element={<Setting />} />
             <Route path="" element={<Service />} />
+            <Route path="service" element={<ServiceAdd />} />
+            <Route path="docs" element={<Documents />} />
           </Route>
         </Routes>
       </Router>

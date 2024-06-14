@@ -1,6 +1,7 @@
 import React from 'react'
 import ServicesService from '../../services/ServicesService';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 const getServices = async () => {
   return await ServicesService.getServices();
@@ -14,6 +15,12 @@ const Service = () => {
     queryFn: () => getServices(),
     staleTime: 1000 * 60 * 5,
   })
+
+  const navigate = useNavigate();
+  const handleSubmitDoc = (service) => {
+    localStorage.setItem('service', JSON.stringify(service))
+    navigate('/admin/service')
+  }
 
   return (
     <div className='space-y-7'>
@@ -35,7 +42,7 @@ const Service = () => {
                   <h2 className="card-title text-2xl capitalize">{service.name}</h2>
                   <p>{service.description}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-success">Acceder</button>
+                    <button onClick={() => handleSubmitDoc(service)} className="btn btn-success">Acceder</button>
                   </div>
                 </div>
               </div>
