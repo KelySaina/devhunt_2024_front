@@ -8,12 +8,13 @@ const RegistrationForm = () => {
     const userCode = useRef();
 
     const [formData, setFormData] = useState({
-        first_name: "",
-        last_name: "",
-        birthdate: "",
+        firstName: "",
+        lastName: "",
+        dateOfBirth: "",
         email: "",
         password: "",
-        confirm_password: ""
+        confirm_password: "",
+        username: ""
     });
 
     const [verificationCode, setVerificationCode] = useState('');
@@ -43,7 +44,7 @@ const RegistrationForm = () => {
         generateVerificationCode();
 
         try {
-            const signUpResponse = await AuthService.signup(formData.email, verificationCode);
+            const signUpResponse = await AuthService.signupVerify(formData.email, verificationCode);
             console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
             handleNextClick()
         } catch (error) {
@@ -51,10 +52,15 @@ const RegistrationForm = () => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const code = userCode.current.value;
         if (code === verificationCode) {
-            console.log("Form submitted with data:", formData);
+            try {
+                await AuthService.signup(formData);
+                toast.success('Compte créé avec succès');
+            } catch (error) {
+                toast.error('Erreur lors de la création du compte');
+            }
         } else {
             toast.error('Code de vérification incorrect');
         }
@@ -67,17 +73,17 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="first_name">Nom</label>
-                            <input onChange={handleInputChange} value={formData.first_name} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="first_name" type="text" placeholder="RANAIVOSON" />
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Nom</label>
+                            <input onChange={handleInputChange} value={formData.firstName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="firstName" type="text" placeholder="RANAIVOSON" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="last_name">Prénoms</label>
-                            <input onChange={handleInputChange} value={formData.last_name} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="last_name" type="text" placeholder="Muriel" />
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Prénoms</label>
+                            <input onChange={handleInputChange} value={formData.lastName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="lastName" type="text" placeholder="Muriel" />
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="birthdate">Date de naissance</label>
-                        <input onChange={handleInputChange} value={formData.birthdate} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="birthdate" type="date" />
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Date de naissance</label>
+                        <input onChange={handleInputChange} value={formData.dateOfBirth} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="dateOfBirth" type="date" />
                     </div>
                     <div className="flex justify-end mt-8">
                         <button className="btn btn-success text-white rounded-full w-28" onClick={handleNextClick}>Suivant</button>
@@ -86,9 +92,15 @@ const RegistrationForm = () => {
             )}
             {step === 2 && (
                 <div className="py-4 px-8">
-                    <div className="mb-8">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Email</label>
-                        <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
+                    <div className="grid grid-cols-2 gap-2">
+                        <div className="mb-8">
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Username</label>
+                            <input onChange={handleInputChange} value={formData.username} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="MurielArii" />
+                        </div>
+                        <div className="mb-8">
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Email</label>
+                            <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
+                        </div>
                     </div>
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">

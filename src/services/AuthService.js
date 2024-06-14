@@ -23,7 +23,7 @@ class AuthService {
         }
     }
 
-    async signup(email, verificationCode) {
+    async signupVerify(email, verificationCode) {
         try {
             const response = await fetch(`${HOST}/api/verify`, {
                 method: 'POST',
@@ -41,6 +41,28 @@ class AuthService {
             }
 
             const data = await response;
+            return data;
+        } catch (error) {
+            throw new Error('Signup failed:', error.message);
+        }
+    }
+
+    async signup(formData) {
+        try {
+            console.log(formData);
+            const response = await fetch(`${HOST}/api/users/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Signup failed');
+            }
+
+            const data = await response.json();
             return data;
         } catch (error) {
             throw new Error('Signup failed:', error.message);
