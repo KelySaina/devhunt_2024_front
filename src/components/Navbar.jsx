@@ -21,14 +21,14 @@ const Navbar = () => {
                 <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-10">
+                <ul className="menu menu-horizontal px-10 text-lg">
                     <li><a>Fandraisana</a></li>
                     <li><a>Mombamomba </a></li>
                     <li><a>Ireo Serivisy</a></li>
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <a className="btn btn-success rounded-full text-white">Hisoratra anarana</a>
             </div>
         </div>
     )
