@@ -40,7 +40,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div>
-                    <img className="sm" src={Image} alt="My Image" />
+                    <img className="w-[400px]" src={Image} alt="My Image" />
                 </div>
                 <div className=" relative flex flex-col px-40 space-y-5">
                     <p>

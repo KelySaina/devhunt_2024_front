@@ -1,7 +1,7 @@
 const Service = () => {
     return (
-        <div className="space-y-20 h-screen">
-            <h1 className="text-5xl text-center">Ireo serivisy misy ato aminay</h1>
+        <div className="space-y-20 py-16">
+            <h1 className="text-5xl my-10 text-center">Ireo serivisy misy ato aminay</h1>
             <div class="grid grid-cols-3 divide-x py-8 mx-20">
                 <div className="flex flex-col justify-center items-center space-y-2">
                     <svg className="w-10 stroke-success" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
