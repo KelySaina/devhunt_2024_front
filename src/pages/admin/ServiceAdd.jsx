@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import ServicesService from "../../services/ServicesService";
+import toast from "react-hot-toast";
 
 function formatLabel(label) {
     if (!label) return '';
@@ -48,8 +49,16 @@ const ServiceAdd = () => {
         initialValues: initialValues,
         validationSchema: validationSchema,
         onSubmit: async (values) => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const data = {
+                values: {
+                    ...values,
+                    user_id: user.user_id
+                }
+            };
             try {
-                await ServicesService.submitForService(values, JSON.parse(localStorage.getItem('service')).api_url);
+                await ServicesService.submitForService(data.values, JSON.parse(localStorage.getItem('service')).api_url, JSON.parse(localStorage.getItem('service')).service_id, user.user_id);
+                toast.success('Votre demande a été soumise avec succès.');
             } catch (error) {
                 console.error('Une erreur s\'est produite, veuillez réessayer.');
             }
