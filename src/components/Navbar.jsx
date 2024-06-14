@@ -1,6 +1,6 @@
 const Navbar = () => {
     return (
-        <div className="navbar px-12">
+        <div className="navbar px-16">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -18,18 +18,17 @@ const Navbar = () => {
                         <li><a>Item 3</a></li>
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">CitizenConnect</a>
+                <a className="btn btn-ghost text-xl">daisyUI</a>
             </div>
             <div className="navbar-center hidden lg:flex">
-
+                <ul className="menu menu-horizontal px-10 text-lg">
+                    <li><a>Fandraisana</a></li>
+                    <li><a>Mombamomba </a></li>
+                    <li><a>Ireo Serivisy</a></li>
+                </ul>
             </div>
             <div className="navbar-end">
-                <ul className="menu menu-horizontal px-40">
-                    <li><a>Fandraisana</a></li>
-                    <li><a>Ireo Serivisy</a></li>
-                    <li><a>Item 3</a></li>
-                </ul>
-            
+                <a className="btn btn-success rounded-full text-white">Hisoratra anarana</a>
             </div>
         </div>
     )
