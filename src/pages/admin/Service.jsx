@@ -15,7 +15,6 @@ const Service = () => {
     staleTime: 1000 * 60 * 5,
   })
 
-  console.log(services);
   return (
     <div className='space-y-7'>
       <div>
@@ -28,19 +27,21 @@ const Service = () => {
             <div className="skeleton h-52 w-96"></div>
           </div>
         }
-        {
-          services && services.map((service) => (
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <div className="card-body">
-                <h2 className="card-title">{service.title}</h2>
-                <p>{service.description}</p>
-                <div className="card-actions justify-end">
-                  <button className="btn btn-primary">Regarder</button>
+        <div className='flex gap-5'>
+          {
+            services && services.map((service) => (
+              <div key={service.service_id} className="card hover:-translate-y-5 duration-100 w-96 bg-base-100 shadow-xl">
+                <div className="card-body">
+                  <h2 className="card-title text-2xl capitalize">{service.name}</h2>
+                  <p>{service.description}</p>
+                  <div className="card-actions justify-end">
+                    <button className="btn btn-success">Acceder</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
         {
           !servicePending && services && services.length === 0 &&
           <div>
