@@ -1,6 +1,6 @@
 const Service = () => {
     return (
-        <div className="space-y-10">
+        <div className="space-y-16 h-screen">
             <h1 className="text-4xl text-center">Ireo serivisy misy ato aminay</h1>
             <div class="grid grid-cols-3 divide-x bg-base-200 py-8 mx-20">
                 <div className="flex flex-col justify-center items-center space-y-2">
