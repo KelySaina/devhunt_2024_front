@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import AuthService from "../services/AuthService";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -14,12 +16,16 @@ const LoginForm = () => {
         setPassword(event.target.value);
     };
 
+    const navigate = useNavigate();
     const login = async () => {
         try {
             const loginResponse = await AuthService.login(email, password);
-            console.log("Login successful. Token:", loginResponse);
+            localStorage.setItem("token", loginResponse.token);
+            localStorage.setItem("user", JSON.stringify(loginResponse.user));
+            toast.success("Bienvenue!");
+            navigate('/admin')
         } catch (error) {
-            console.error('Login failed:', error);
+            toast.error("Login failed");
         }
     };
 
