@@ -85,12 +85,12 @@ const RegistrationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const handleSubmit = async () => {
         const code = userCode.current.value;
-        console.log('Code de verification:', code);
-        console.log('Code de verification attendu:', verificationCode);
         if (code === verificationCode) {
             try {
                 setIsSubmitting(true);
-                await AuthService.signup(formData);
+                const registerResponse = await AuthService.signup(formData);
+                localStorage.setItem("token", registerResponse.token);
+                localStorage.setItem("user", JSON.stringify(registerResponse.user));
                 toast.success('Compte créé avec succès');
                 navigate('/admin');
             } catch (error) {
