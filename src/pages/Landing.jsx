@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Service from "../components/Service";
 import About from "../components/About"
+import Partenaire from "../components/Partenaire";
 const Landing = () => {
     return (
         <div>
@@ -11,6 +12,7 @@ const Landing = () => {
             <Header />
             <About />
             <Service />
+            <Partenaire />
         </div>
     )
 }
