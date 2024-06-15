@@ -37,7 +37,7 @@ const Service = () => {
         <div className='flex gap-5'>
           {
             services && services.map((service) => (
-              <div key={service.service_id} className={`${service.state == 'inactive' && 'hidden'} card hover:-translate-y-5 duration-100 w-96 bg-base-100 shadow-xl`}>
+              <div key={service.service_id} className={`${service.state == 'inactive' && 'hidden'} card hover:shadow-success duration-100 w-96 bg-base-100 shadow-xl`}>
                 <div className="card-body">
                   <h2 className="card-title text-2xl capitalize">{service.name}</h2>
                   <p>{service.description}</p>

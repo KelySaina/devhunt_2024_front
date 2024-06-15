@@ -87,9 +87,6 @@ const Documents = () => {
                                 </tr>
                             }
                             {
-                                docError && <tr><td colSpan="4">Error: {docError.message}</td></tr>
-                            }
-                            {
                                 docs?.map((doc, index) => {
                                     return (
                                         <tr key={index}>
@@ -109,6 +106,16 @@ const Documents = () => {
                                         </tr>
                                     )
                                 })
+                            }
+                            {
+                                !docPending && docs.length == 0 &&
+                                <tr>
+                                    <td colSpan="4">
+                                        <div className="flex justify-center">
+                                            No data yet
+                                        </div>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>

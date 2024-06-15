@@ -53,6 +53,7 @@ function verifyResidence(text) {
     }
 
     const pattern = /CERTIFICAT DE RESIDENCE/i;
+    
     return pattern.test(text);
 }
 
@@ -178,11 +179,12 @@ const ServiceAdd = () => {
     };
 
     return (
-        <div className="space-y-5">
+        <div className="space-y-7">
             <div className="space-y-2">
                 <h1 className='text-4xl first-letter:text-5xl font-bold'>{service.name}</h1>
-                <p className="text-lg">{service.description}</p>
+                <p className="text-xl">{service.description}</p>
             </div>
+            <hr />
             <div className="grid grid-cols-2">
                 {
                     extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'tax' &&
@@ -210,12 +212,12 @@ const ServiceAdd = () => {
                         </div>
                     </div>
                 }
-                <div>
+                <div className="space-y-5">
                     <div>
                         <h1 className="text-xl font-bold">Remplissez le formulaire ci-dessous</h1>
                     </div>
                     <form className="space-y-4" onSubmit={formik.handleSubmit}>
-                        <div className="grid grid-cols-4 space-y-2 gap-x-3">
+                        <div className="grid grid-cols-4 gap-4">
                             {docsReq.map((doc, index) => (
                                 <label key={index} className="form-control w-full max-w-xs">
                                     <div className="flex justify-between">
