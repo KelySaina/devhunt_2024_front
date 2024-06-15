@@ -1,11 +1,11 @@
 import AboutImage from '../images/About.png'
 const About = () => {
     return (
-        <div className='space-y-5'>
+        <div className='space-y-5 py-10'>
 
             <div className="grid grid-cols-2">
                 <div className='flex items-center justify-center'>
-                    <img src={AboutImage} className='w-[500px]' />
+                    <img src={AboutImage} className='w-[400px]' />
                 </div>
                 <div className='flex flex-col  justify-center space-y-6'>
                     <h2 className="text-5xl">Ireo mombamomba anay</h2>
