@@ -47,6 +47,15 @@ function verifyText(text) {
     return pattern_rep_one.test(text) || pattern_rep.test(text) || pattern_kara.test(text);
 }
 
+function verifyResidence(text) {
+    if (!text) {
+        return false;
+    }
+
+    const pattern = /CERTIFICAT DE RESIDENCE/i;
+    return pattern.test(text);
+}
+
 const ServiceAdd = () => {
     const [service, setService] = useState({
         name: localStorage.getItem('service') ? JSON.parse(localStorage.getItem('service')).name : '',
@@ -100,6 +109,11 @@ const ServiceAdd = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [verifiedText, setVerifiedText] = useState(false);
 
+    const [selectedImageCin, setSelectedImageCin] = useState(null);
+    const [isProcessingCin, setIsProcessingCin] = useState(false);
+    const [verifiedTextCin, setVerifiedTextCin] = useState(false);
+
+    // for tax
     const handleImageUpload = async (event) => {
         const image = event.target.files[0];
         setSelectedImage(null);
@@ -131,6 +145,38 @@ const ServiceAdd = () => {
         }
     };
 
+    // for cin
+    const handleImageUploadCin = async (event) => {
+        const image = event.target.files[0];
+        setSelectedImageCin(null);
+        setVerifiedTextCin(false);
+        setSelectedImageCin(URL.createObjectURL(image));
+
+        if (URL.createObjectURL(image)) {
+            try {
+                setIsProcessingCin(true);
+                const result = await Tesseract.recognize(URL.createObjectURL(image));
+                var isResidence = false;
+                result.data.lines.forEach((line) => {
+                    if (verifyResidence(line.text)) {
+                        console.log(line.text);
+                        setVerifiedTextCin(true);
+                        isResidence = true;
+                        toast.success("Certificat de résidence valide")
+                    }
+                });
+                if (!isResidence) {
+                    setVerifiedTextCin(false)
+                    toast.error("Certificat de résidence non valide, veuiller réessayer avec une aute")
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsProcessingCin(false);
+            }
+        }
+    };
+
     return (
         <div className="space-y-5">
             <div className="space-y-2">
@@ -143,11 +189,24 @@ const ServiceAdd = () => {
                     <div className="space-y-5">
                         <h1 className="text-xl font-bold">Verification identité requis</h1>
                         <div className="flex justify-between items-center">
-                            <label>Télécharger votre carte d'identité national</label>
+                            <label>Uploader votre carte d'identité national</label>
                             <input type="file" accept="image/*" className="file-input w-full max-w-xs" onChange={handleImageUpload} />
                         </div>
                         <div className="flex justify-center">
                             {selectedImage && <img className={`w-1/2 ${isProcessing && 'animate-pulse'}`} src={selectedImage} alt="Selected" />}
+                        </div>
+                    </div>
+                }
+                {
+                    extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'cin' &&
+                    <div className="space-y-5">
+                        <h1 className="text-xl font-bold">Verification de residence requis</h1>
+                        <div className="flex justify-between items-center">
+                            <label>Uploader votre certificat de residence</label>
+                            <input type="file" accept="image/*" className="file-input w-full max-w-xs" onChange={handleImageUploadCin} />
+                        </div>
+                        <div className="flex justify-center">
+                            {selectedImageCin && <img className={`w-1/2 ${isProcessingCin && 'animate-pulse'}`} src={selectedImageCin} alt="Selected" />}
                         </div>
                     </div>
                 }
@@ -176,14 +235,22 @@ const ServiceAdd = () => {
                         </div>
                         <div className="flex justify-end">
                             {
-                                extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'tax' ?
-                                    <button disabled={!verifiedText} type="submit" className="btn btn-success">
-                                        Envoyer
-                                    </button>
-                                    :
-                                    <button type="submit" className="btn btn-success">
-                                        Envoyer
-                                    </button>
+                                extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'tax' &&
+                                <button disabled={!verifiedText} type="submit" className="btn btn-success">
+                                    Envoyer
+                                </button>
+                            }
+                            {
+                                extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'cin' &&
+                                <button disabled={!verifiedTextCin} type="submit" className="btn btn-success">
+                                    Envoyer
+                                </button>
+                            }
+                            {
+                                extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) != 'tax' && extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) != 'cin' &&
+                                <button type="submit" className="btn btn-success">
+                                    Envoyer
+                                </button>
                             }
                         </div>
                     </form>
