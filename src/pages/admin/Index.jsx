@@ -68,10 +68,14 @@ const Index = () => {
                     }
                 </div>
                 <div className='space-y-2'>
-                    <div className='text-center flex flex-col'>
-                        <label>{JSON.parse(localStorage.getItem('user')).username}</label>
-                        <label className='text-xs'>{JSON.parse(localStorage.getItem('user')).email}</label>
-                    </div>
+                    {
+                        !isSuper
+                        &&
+                        <div className='text-center flex flex-col'>
+                            <label>{JSON.parse(localStorage.getItem('user')).username}</label>
+                            <label className='text-xs'>{JSON.parse(localStorage.getItem('user')).email}</label>
+                        </div>
+                    }
                     <hr />
                     <div onClick={handleLogtOut} className='flex items-center gap-5 justify-center cursor-pointer hover:text-error hover:scale-110 duration-100'>
                         <label className='text font-semibold cursor-pointer'>Déconnexion</label>
