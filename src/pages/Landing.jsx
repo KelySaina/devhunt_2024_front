@@ -9,9 +9,15 @@ const Landing = () => {
             <div className="sticky top-0 bg-base-100 z-50">
                 <Navbar />
             </div>
-            <Header />
-            <About />
-            <Service />
+            <div id="header">
+                <Header />
+            </div>
+            <div id="about">
+                <About />
+            </div>
+            <div id="service">
+                <Service />
+            </div>
             <Partenaire />
         </div>
     )

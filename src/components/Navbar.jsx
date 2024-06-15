@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Link as LinkSmooth } from 'react-scroll';
 
 const Navbar = () => {
     const isLogged = localStorage.getItem('token') && localStorage.getItem('user')
@@ -25,21 +26,21 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className=" flex px-10 text-lg">
-                    <li><a className="text-lg m-6 group relative w-max cursor-pointer">
-                        <span className="hover:text-success">Fandraisana</span>
+                    <LinkSmooth to="header" smooth={true} duration={500}><a className="text-lg m-6 group relative w-max cursor-pointer">
+                        <span className="hover:text-success">Acceuil</span>
                         <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
                         <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
-                    </a></li>
-                    <li><a className="text-lg m-6 group relative w-max cursor-pointer">
-                        <span className="hover:text-success">Mombamomba</span>
+                    </a></LinkSmooth>
+                    <LinkSmooth to="about" smooth={true} duration={500}><a className="text-lg m-6 group relative w-max cursor-pointer">
+                        <span className="hover:text-success">A propos</span>
                         <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
                         <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
-                    </a></li>
-                    <li><a className="text-lg m-6 group relative w-max cursor-pointer">
-                        <span className="hover:text-success">Serivisy</span>
+                    </a></LinkSmooth>
+                    <LinkSmooth to="service" smooth={true} duration={500}><a className="text-lg m-6 group relative w-max cursor-pointer">
+                        <span className="hover:text-success">Services</span>
                         <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
                         <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
-                    </a></li>
+                    </a></LinkSmooth>
                 </ul>
             </div>
             <div className="navbar-end">
