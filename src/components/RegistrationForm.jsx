@@ -41,28 +41,35 @@ const RegistrationForm = () => {
         setStep(step - 1);
     };
 
+    const [isVerificating, setIsVerificating] = useState(false);
     const handleVerification = async () => {
         generateVerificationCode();
-
         try {
+            setIsVerificating(true);
             const signUpResponse = await AuthService.signupVerify(formData.email, verificationCode);
             console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
             handleNextClick()
         } catch (error) {
-            console.error(`Error sending verification code to ${formData.email}:`, error);
+            toast.error('Erreur lors de l\'envoi du code de vérification ,verifier vos informations');
+        } finally {
+            setIsVerificating(false);
         }
     };
 
     const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const handleSubmit = async () => {
         const code = userCode.current.value;
         if (code === verificationCode) {
             try {
+                setIsSubmitting(true);
                 await AuthService.signup(formData);
                 toast.success('Compte créé avec succès');
                 navigate('/admin');
             } catch (error) {
                 toast.error('Erreur lors de la création du compte');
+            } finally {
+                setIsSubmitting(false);
             }
         } else {
             toast.error('Code de vérification incorrect');
@@ -71,25 +78,25 @@ const RegistrationForm = () => {
 
     return (
         <div className="space-y-8">
-            <h1 className="text-4xl text-center text-success">Mamorona kaonty - {`Dingana ${step}`}</h1>
+            <h1 className="text-4xl text-center text-success">{`Etape - ${step}`}</h1>
             {step === 1 && (
                 <div className="py-4 px-8">
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Anarana</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Nom</label>
                             <input onChange={handleInputChange} value={formData.firstName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="firstName" type="text" placeholder="RANAIVOSON" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Famenon'anarana</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Prénoms</label>
                             <input onChange={handleInputChange} value={formData.lastName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="lastName" type="text" placeholder="Muriel" />
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Daty nahaterahana</label>
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Date de naissance</label>
                         <input onChange={handleInputChange} value={formData.dateOfBirth} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="dateOfBirth" type="date" />
                     </div>
                     <div className="flex justify-end mt-8">
-                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleNextClick}>Manaraka</button>
+                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleNextClick}>Suivant</button>
                     </div>
                 </div>
             )}
@@ -97,38 +104,53 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="grid grid-cols-2 gap-2">
                         <div className="mb-8">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Anaran'ny mpampiasa</label>
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Pseudo</label>
                             <input onChange={handleInputChange} value={formData.username} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="MurielArii" />
                         </div>
                         <div className="mb-8">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Adiresy Mailaka</label>
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Addresse mail</label>
                             <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
                         </div>
                     </div>
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="password">Teny miafina</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="password">Mot de passe</label>
                             <input onChange={handleInputChange} value={formData.password} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="password" type="password" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="confirm_password">Fanamarinana teny miafina</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="confirm_password">Confirmation</label>
                             <input onChange={handleInputChange} value={formData.confirm_password} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="confirm_password" type="password" />
                         </div>
                     </div>
                     <div className="flex justify-between mt-8">
-                        <button className="btn border-success text-dark rounded-full w-28" onClick={handlePreviousClick}>Teo aloha</button>
-                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleVerification}>Manaraka</button>
+                        <button className="btn border-success text-dark rounded-full w-28" onClick={handlePreviousClick}>Précédent</button>
+                        <button className="btn btn-success text-white rounded-full" onClick={handleVerification}>
+                            Suivant
+                            {
+                                isVerificating &&
+                                <span className="loading loading-dots loading-sm"></span>
+                            }
+                        </button>
                     </div>
                 </div>
             )}
             {step === 3 && (
                 <div className="py-4 px-8">
                     <div className="mb-8">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email_final">Kaody fanamarinana</label>
+                        <div className="mb-2">
+                            <label className="block text-grey-darker font-bold text-2xl" htmlFor="email_final">Code de verification</label>
+                            <label className="text-xs text-current">envoyée dans votre mail</label>
+                        </div>
                         <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" ref={userCode} type="number" />
                     </div>
-                    <div className="flex justify-end mt-8">
-                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleSubmit}>Hanamarina</button>
+                    <div className="flex justify-center mt-8">
+                        <button className="btn btn-success text-white rounded-full" onClick={handleSubmit}>
+                            Finaliser
+                            {
+                                isSubmitting &&
+                                <span className="loading loading-dots loading-sm"></span>
+                            }
+                        </button>
                     </div>
                 </div>
             )}

@@ -60,7 +60,7 @@ const LoginForm = () => {
                             </label>
                         </div>
                         <div className="flex justify-center gap-3 mt-8">
-                            <button type="submit" className="btn btn-success text-white rounded-full w-28 duration-200">
+                            <button type="submit" className="btn btn-success text-white rounded-full duration-200">
                                 <span>Se connecter</span>
                                 {
                                     isLogin &&
