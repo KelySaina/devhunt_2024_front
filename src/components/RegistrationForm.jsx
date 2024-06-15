@@ -33,8 +33,17 @@ const RegistrationForm = () => {
         });
     };
 
+    const [classReq, setClassReq] = useState('');
     const handleNextClick = () => {
-        setStep(step + 1);
+        if (step == 1) {
+            if (formData.firstName === "" || formData.lastName === "" || formData.dateOfBirth === "") {
+                toast.error('Veuillez remplir tous les champs');
+                setClassReq('text-error');
+            } else {
+                setClassReq('');
+                setStep(step + 1);
+            }
+        }
     };
 
     const handlePreviousClick = () => {
@@ -42,17 +51,28 @@ const RegistrationForm = () => {
     };
 
     const [isVerificating, setIsVerificating] = useState(false);
+    const [classReqTwo, setClassReqTwo] = useState('');
     const handleVerification = async () => {
-        generateVerificationCode();
-        try {
-            setIsVerificating(true);
-            const signUpResponse = await AuthService.signupVerify(formData.email, verificationCode);
-            console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
-            handleNextClick()
-        } catch (error) {
-            toast.error('Erreur lors de l\'envoi du code de vérification ,verifier vos informations');
-        } finally {
-            setIsVerificating(false);
+        if (formData.email === "" || formData.password === "" || formData.confirm_password === "" || formData.username === "") {
+            toast.error('Veuillez remplir tous les champs');
+            setClassReqTwo('text-error');
+        } else {
+            setClassReqTwo('');
+            if (formData.password !== formData.confirm_password) {
+                toast.error('Les mots de passe ne correspondent pas');
+            } else {
+                generateVerificationCode();
+                try {
+                    setIsVerificating(true);
+                    const signUpResponse = await AuthService.signupVerify(formData.email, verificationCode);
+                    console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
+                    handleNextClick()
+                } catch (error) {
+                    toast.error('Erreur lors de l\'envoi du code de vérification ,verifier vos informations');
+                } finally {
+                    setIsVerificating(false);
+                }
+            }
         }
     };
 
@@ -83,16 +103,16 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Nom</label>
+                            <label className={`${classReq} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="firstName">Nom</label>
                             <input onChange={handleInputChange} value={formData.firstName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="firstName" type="text" placeholder="RANAIVOSON" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Prénoms</label>
+                            <label className={`${classReq} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="lastName">Prénoms</label>
                             <input onChange={handleInputChange} value={formData.lastName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="lastName" type="text" placeholder="Muriel" />
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Date de naissance</label>
+                        <label className={`${classReq} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="dateOfBirth">Date de naissance</label>
                         <input onChange={handleInputChange} value={formData.dateOfBirth} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="dateOfBirth" type="date" />
                     </div>
                     <div className="flex justify-end mt-8">
@@ -104,21 +124,21 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="grid grid-cols-2 gap-2">
                         <div className="mb-8">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Pseudo</label>
+                            <label className={`${classReqTwo} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="username">Pseudo</label>
                             <input onChange={handleInputChange} value={formData.username} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="MurielArii" />
                         </div>
                         <div className="mb-8">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Addresse mail</label>
+                            <label className={`${classReqTwo} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="email">Addresse mail</label>
                             <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
                         </div>
                     </div>
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="password">Mot de passe</label>
+                            <label className={`${classReqTwo} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="password">Mot de passe</label>
                             <input onChange={handleInputChange} value={formData.password} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="password" type="password" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="confirm_password">Confirmation</label>
+                            <label className={`${classReqTwo} block text-grey-darker text-sm mb-2 font-bold`} htmlFor="confirm_password">Confirmation</label>
                             <input onChange={handleInputChange} value={formData.confirm_password} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="confirm_password" type="password" />
                         </div>
                     </div>
