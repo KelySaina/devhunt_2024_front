@@ -3,6 +3,7 @@ import AuthService from "../services/AuthService";
 import { useRef } from "react";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RegistrationForm = () => {
     const [step, setStep] = useState(1);
@@ -20,9 +21,14 @@ const RegistrationForm = () => {
 
     const [verificationCode, setVerificationCode] = useState('');
 
+    useEffect(() => {
+        const code = generateVerificationCode();
+        setVerificationCode(code);
+    }, []);
+
     const generateVerificationCode = () => {
         const code = Math.floor(100000 + Math.random() * 900000);
-        setVerificationCode(code.toString());
+        return code.toString()
     };
 
     const handleInputChange = (event) => {
@@ -61,12 +67,11 @@ const RegistrationForm = () => {
             if (formData.password !== formData.confirm_password) {
                 toast.error('Les mots de passe ne correspondent pas');
             } else {
-                generateVerificationCode();
                 try {
                     setIsVerificating(true);
                     const signUpResponse = await AuthService.signupVerify(formData.email, verificationCode);
                     console.log(`Verification code sent successfully to ${formData.email}:`, signUpResponse);
-                    handleNextClick()
+                    setStep(step + 1);
                 } catch (error) {
                     toast.error('Erreur lors de l\'envoi du code de vérification ,verifier vos informations');
                 } finally {
@@ -80,6 +85,8 @@ const RegistrationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const handleSubmit = async () => {
         const code = userCode.current.value;
+        console.log('Code de verification:', code);
+        console.log('Code de verification attendu:', verificationCode);
         if (code === verificationCode) {
             try {
                 setIsSubmitting(true);
