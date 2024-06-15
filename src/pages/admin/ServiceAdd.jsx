@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import ServicesService from "../../services/ServicesService";
 import toast from "react-hot-toast";
+import Tesseract from 'tesseract.js';
 
 function formatLabel(label) {
     if (!label) return '';
@@ -14,6 +15,36 @@ function formatLabel(label) {
         .split(/\s+/)
         .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(' ');
+}
+
+function extractResourceName(apiEndpoint) {
+    const startIndex = apiEndpoint.indexOf("/api/");
+    let resourceName = "";
+
+    if (startIndex !== -1) {
+        const afterApi = apiEndpoint.slice(startIndex + "/api/".length);
+        const nextSlashIndex = afterApi.indexOf("/");
+
+        if (nextSlashIndex !== -1) {
+            resourceName = afterApi.slice(0, nextSlashIndex);
+        } else {
+            resourceName = afterApi;
+        }
+    }
+
+    return resourceName;
+}
+
+function verifyText(text) {
+    if (!text) {
+        return false;
+    }
+
+    const pattern_rep = /Repoblikan['‘’`]?[i|t] Madagasikara/i;
+    const pattern_rep_one = /Repoblikan\s*Madagasikara/i;
+    const pattern_kara = /KARA[-\s]?PANONDROM[-\s]?PIRENENA/i;
+
+    return pattern_rep_one.test(text) || pattern_rep.test(text) || pattern_kara.test(text);
 }
 
 const ServiceAdd = () => {
@@ -64,41 +95,99 @@ const ServiceAdd = () => {
             }
         },
     });
+
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [verifiedText, setVerifiedText] = useState(false);
+
+    const handleImageUpload = async (event) => {
+        const image = event.target.files[0];
+        setSelectedImage(null);
+        setVerifiedText(false);
+        setSelectedImage(URL.createObjectURL(image));
+
+        if (URL.createObjectURL(image)) {
+            try {
+                setIsProcessing(true);
+                const result = await Tesseract.recognize(URL.createObjectURL(image));
+                var isCin = false;
+                result.data.lines.forEach((line) => {
+                    if (verifyText(line.text)) {
+                        console.log(line.text);
+                        setVerifiedText(true);
+                        isCin = true;
+                        toast.success("Carte d'identidé valide")
+                    }
+                });
+                if (!isCin) {
+                    setVerifiedText(false)
+                    toast.error("Carte d'identité non valide, veuiller réessayer avec une aute")
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsProcessing(false);
+            }
+        }
+    };
+
     return (
         <div className="space-y-5">
             <div className="space-y-2">
                 <h1 className='text-4xl first-letter:text-5xl font-bold'>{service.name}</h1>
                 <p className="text-lg">{service.description}</p>
             </div>
-            <div>
-                <h1 className="text-xl font-bold">Remplissez le formulaire ci-dessous</h1>
-            </div>
-            <div>
-                <form className="space-y-4" onSubmit={formik.handleSubmit}>
-                    <div className="grid grid-cols-4 space-y-2">
-                        {docsReq.map((doc, index) => (
-                            <label key={index} className="form-control w-full max-w-xs">
-                                <div className="flex justify-between">
-                                    <span className="label-text">{formatLabel(doc)}</span>
-                                    {formik.errors[doc] && (
-                                        <div className="text-xs text-error">{formik.errors[doc]}</div>
-                                    )}
-                                </div>
-                                <input
-                                    type="text"
-                                    placeholder={doc}
-                                    className={`input input-bordered w-full max-w-xs ${formik.errors[doc] ? "border-error focus-visible:ring-error" : ""}`}
-                                    {...formik.getFieldProps(doc)}
-                                />
-                            </label>
-                        ))}
+            <div className="grid grid-cols-2">
+                {
+                    extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'tax' &&
+                    <div className="space-y-5">
+                        <h1 className="text-xl font-bold">Verification identité requis</h1>
+                        <div className="flex justify-between items-center">
+                            <label>Uploader votre carte d'identité national</label>
+                            <input type="file" accept="image/*" className="file-input w-full max-w-xs" onChange={handleImageUpload} />
+                        </div>
+                        <div className="flex justify-center">
+                            {selectedImage && <img className={`w-1/2 ${isProcessing && 'animate-pulse'}`} src={selectedImage} alt="Selected" />}
+                        </div>
                     </div>
-                    <div className="flex justify-end">
-                        <button type="submit" className="btn btn-success">
-                            Envoyer
-                        </button>
+                }
+                <div>
+                    <div>
+                        <h1 className="text-xl font-bold">Remplissez le formulaire ci-dessous</h1>
                     </div>
-                </form>
+                    <form className="space-y-4" onSubmit={formik.handleSubmit}>
+                        <div className="grid grid-cols-4 space-y-2">
+                            {docsReq.map((doc, index) => (
+                                <label key={index} className="form-control w-full max-w-xs">
+                                    <div className="flex justify-between">
+                                        <span className="label-text">{formatLabel(doc)}</span>
+                                        {formik.errors[doc] && (
+                                            <div className="text-xs text-error">{formik.errors[doc]}</div>
+                                        )}
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder={doc}
+                                        className={`input input-bordered w-full max-w-xs ${formik.errors[doc] ? "border-error focus-visible:ring-error" : ""}`}
+                                        {...formik.getFieldProps(doc)}
+                                    />
+                                </label>
+                            ))}
+                        </div>
+                        <div className="flex justify-end">
+                            {
+                                extractResourceName(JSON.parse(localStorage.getItem('service')).api_url) === 'tax' ?
+                                    <button disabled={!verifiedText} type="submit" className="btn btn-success">
+                                        Envoyer
+                                    </button>
+                                    :
+                                    <button type="submit" className="btn btn-success">
+                                        Envoyer
+                                    </button>
+                            }
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
