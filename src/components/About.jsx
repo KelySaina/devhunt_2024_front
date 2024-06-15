@@ -16,7 +16,7 @@ const About = () => {
                     d="M0 526L50 498.8C100 471.7 200 417.3 300 405C400 392.7 500 422.3 600 406.2C700 390 800 328 850 297L900 266L900 601L850 601C800 601 700 601 600 601C500 601 400 601 300 601C200 601 100 601 50 601L0 601Z"
                     strokeLinecap="round" strokeLinejoin="miter"></path>
             </svg>
-            <svg viewBox="0 0 900 600" className='absolute w-full left-0 bottom-0 -z-50 fill-success/10 rotate-180'>
+            <svg viewBox="0 0 900 600" className='absolute w-full left-0 bottom-[100%] -z-50 fill-success/10 rotate-180'>
                 <path
                     d="M0 526L50 498.8C100 471.7 200 417.3 300 405C400 392.7 500 422.3 600 406.2C700 390 800 328 850 297L900 266L900 601L850 601C800 601 700 601 600 601C500 601 400 601 300 601C200 601 100 601 50 601L0 601Z"
                     strokeLinecap="round" strokeLinejoin="miter"></path>
