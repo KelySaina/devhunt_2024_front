@@ -92,7 +92,7 @@ const RegistrationForm = () => {
                 localStorage.setItem("token", registerResponse.token);
                 localStorage.setItem("user", JSON.stringify(registerResponse.user));
                 toast.success('Compte créé avec succès');
-                navigate('/admin');
+                navigate('/admin/');
             } catch (error) {
                 toast.error('Erreur lors de la création du compte');
             } finally {
