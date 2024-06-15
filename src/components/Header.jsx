@@ -15,6 +15,26 @@ const Header = () => {
                 activeOffset={25}
                 shadowScale={5}
             >
+                <svg className='w-2/3 absolute opacity-65 top-0 left-0' viewBox="0 0 900 600" data-atropos-offset="-2">
+                    <g>
+                        <g transform="translate(51 165)">
+                            <path d="M0 -138.2L97.8 -97.8L138.2 0L97.8 97.8L0 138.2L-97.8 97.8L-138.2 0L-97.8 -97.8Z" fill="none"
+                                stroke="#009473" stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(548 117)">
+                            <path d="M0 -59L41.7 -41.7L59 0L41.7 41.7L0 59L-41.7 41.7L-59 0L-41.7 -41.7Z" fill="none" stroke="#009473"
+                                stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(652 384)">
+                            <path d="M0 -55L38.9 -38.9L55 0L38.9 38.9L0 55L-38.9 38.9L-55 0L-38.9 -38.9Z" fill="none" stroke="#009473"
+                                stroke-width="2"></path>
+                        </g>
+                        <g transform="translate(325 352)">
+                            <path d="M0 -111L78.5 -78.5L111 0L78.5 78.5L0 111L-78.5 78.5L-111 0L-78.5 -78.5Z" stroke="#009473"
+                                fill="none" stroke-width="2"></path>
+                        </g>
+                    </g>
+                </svg>
                 <div className="text-center text-7xl space-y-6 py-6" data-atropos-offset="-2" data-aos="zoom-in">
                     <h1><span className='text-success'>Bienvenue</span> sur</h1>
                     <h1>Citizen<span className='text-success'>Connect</span></h1>

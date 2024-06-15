@@ -1,6 +1,28 @@
 const Service = () => {
     return (
-        <div className="space-y-20 py-16 px-[5%]">
+        <div className="space-y-20 py-16 px-[5%] relative">
+            <svg className="absolute w-2/3 opacity-25 top-0 left-0" viewBox="0 0 900 600">
+                <g>
+                    <g transform="translate(662 390)">
+                        <path
+                            d="M0 -138.2L81.3 -111.8L131.5 -42.7L131.5 42.7L81.3 111.8L0 138.2L-81.3 111.8L-131.5 42.7L-131.5 -42.7L-81.3 -111.8Z"
+                            fill="none" stroke="#009473" stroke-width="2"></path>
+                    </g>
+                    <g transform="translate(431 228)">
+                        <path d="M0 -97L57 -78.5L92.3 -30L92.3 30L57 78.5L0 97L-57 78.5L-92.3 30L-92.3 -30L-57 -78.5Z" fill="none"
+                            stroke="#009473" stroke-width="2"></path>
+                    </g>
+                    <g transform="translate(811 106)">
+                        <path
+                            d="M0 -52L30.6 -42.1L49.5 -16.1L49.5 16.1L30.6 42.1L0 52L-30.6 42.1L-49.5 16.1L-49.5 -16.1L-30.6 -42.1Z"
+                            stroke="#009473" fill="none" stroke-width="2"></path>
+                    </g>
+                    <g transform="translate(179 498)">
+                        <path d="M0 -85L50 -68.8L80.8 -26.3L80.8 26.3L50 68.8L0 85L-50 68.8L-80.8 26.3L-80.8 -26.3L-50 -68.8Z"
+                            stroke="#009473" fill="none" stroke-width="2"></path>
+                    </g>
+                </g>
+            </svg>
             <h1 className="text-5xl first-letter:text-7xl my-10 text-center">Les services diponibles sur le transferts</h1>
             <div class="grid grid-cols-3 divide-x py-8 mx-20">
                 <div className="flex flex-col justify-center items-center space-y-2">
