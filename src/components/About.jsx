@@ -20,7 +20,7 @@ const About = () => {
                     <p className='text-xl text-justify'>
                         <span className='text-2xl text-success'>CitizenConnect</span> regroupe tous les services publics en un seul endroit pour simplifier vos démarches administratives. <span className='font-bold text-success'>Soumettez des demandes ou suivre l'avancement de vos dossiers</span>, notre plateforme vous offre une expérience fluide et efficace. Plus besoin de naviguer entre plusieurs sites, tout ce dont vous avez besoin est à portée de main, pour vous faire gagner du temps et vous offrir une tranquillité d'esprit.
                     </p>
-                    <div class="flex justify-between">
+                    <div className="flex justify-between">
                         <div className='flex flex-col justify-center items-center gap-6' data-aos="slide-down">
                             <svg className='w-20 fill-success' viewBox="0 0 24 24">
                                 <path
