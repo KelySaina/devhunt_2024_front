@@ -4,12 +4,14 @@ import Service from "../components/Service";
 import About from "../components/About"
 const Landing = () => {
     return (
-    <div>
-       <Navbar /> 
-       <Header />
-       <About/>
-       <Service />
-    </div>
-)
+        <div>
+            <div className="sticky top-0 bg-base-100 z-50">
+                <Navbar />
+            </div>
+            <Header />
+            <About />
+            <Service />
+        </div>
+    )
 }
 export default Landing;
