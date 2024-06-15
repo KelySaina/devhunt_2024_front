@@ -11,7 +11,7 @@ const Registration = () => {
                     <p className="text-2xl">Tu as déjà un compte ?</p>
                 </div>
                 <div>
-                    <Link to={"/"} className="btn rounded-full text-success hover:scale-110 hover:bg-white">Se connecter</Link>
+                    <Link to={"/login"} className="btn rounded-full text-success hover:scale-110 hover:bg-white">Se connecter</Link>
                 </div>
             </div>
             <div className="flex justify-center items-center">
