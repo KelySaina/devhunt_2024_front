@@ -25,7 +25,7 @@ const Service = () => {
   return (
     <div className='space-y-7'>
       <div>
-        <h1 className='text-4xl first-letter:text-5xl font-bold'>Lisitry ny serivisy rehetra</h1>
+        <h1 className='text-4xl first-letter:text-5xl font-bold'>Liste des services diponibles</h1>
       </div>
       <div>
         {
@@ -37,12 +37,12 @@ const Service = () => {
         <div className='flex gap-5'>
           {
             services && services.map((service) => (
-              <div key={service.service_id} className="card hover:-translate-y-5 duration-100 w-96 bg-base-100 shadow-xl">
+              <div key={service.service_id} className={`${service.state == 'inactive' && 'hidden'} card hover:-translate-y-5 duration-100 w-96 bg-base-100 shadow-xl`}>
                 <div className="card-body">
                   <h2 className="card-title text-2xl capitalize">{service.name}</h2>
                   <p>{service.description}</p>
                   <div className="card-actions justify-end">
-                    <button onClick={() => handleSubmitDoc(service)} className="btn btn-success text-white">Ho jerena</button>
+                    <button onClick={() => handleSubmitDoc(service)} className="btn btn-success text-white">Regarder</button>
                   </div>
                 </div>
               </div>

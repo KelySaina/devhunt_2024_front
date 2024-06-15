@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import AuthService from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
