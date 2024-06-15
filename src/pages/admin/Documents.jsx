@@ -61,7 +61,7 @@ const Documents = () => {
     return (
         <div className="space-y-7">
             <div>
-                <h1 className='text-4xl first-letter:text-5xl font-bold'>List of your submissions</h1>
+                <h1 className='text-4xl first-letter:text-5xl font-bold'>Vos rêquetes</h1>
             </div>
             <div className="grid grid-cols-3 gap-10">
                 <div className="overflow-x-auto col-span-2">
