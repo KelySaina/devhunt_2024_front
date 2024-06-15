@@ -47,7 +47,7 @@ const LoginForm = () => {
     return (
         <div className="space-y-10">
             <div className="space-y-4">
-                <h1 className="text-success font-bold text-6xl">CitizenConnect</h1>
+                <h1 className="font-bold text-6xl">Citizen<span className="text-success">Connect</span></h1>
             </div>
             <form onSubmit={handleSubmit}>
                 <div className="flex justify-center">
