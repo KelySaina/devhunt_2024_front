@@ -1,6 +1,8 @@
 import { useState } from "react"
 import LoginForm from "../components/LoginForm"
 import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 const Login = () => {
     const [hoverLogin, setHoverLogin] = useState('')
     const [hoverRegister, setHoverRegister] = useState('!opacity-0')
@@ -17,6 +19,13 @@ const Login = () => {
             setHoverRegister('!translate-x-0 opacity-20')
         }, 500);
     }
+
+    const navigate = useNavigate()
+    useEffect(() => {
+        if (localStorage.getItem('token') && localStorage.getItem('user')) {
+            navigate('/admin/')
+        }
+    }, [])
     return (
         <div>
             <div className="grid grid-cols-2 h-screen">
