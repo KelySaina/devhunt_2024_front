@@ -48,7 +48,6 @@ class AuthService {
 
     async signup(formData) {
         try {
-            console.log(formData);
             const response = await fetch(`${HOST}/api/users/register`, {
                 method: 'POST',
                 headers: {
