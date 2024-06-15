@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
+    const isLogged = localStorage.getItem('token') && localStorage.getItem('user')
     return (
         <div className="navbar px-14">
             <div className="navbar-start">
@@ -40,7 +43,12 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn btn-success rounded-full text-white">Hisoratra anarana</a>
+                {
+                    isLogged ?
+                        <Link to={"/admin"} className="btn btn-success rounded-full text-white font-bold">Iditra am kaonty</Link>
+                        :
+                        <Link to={"/login"} className="btn btn-success rounded-full text-white">Hisoratra anarana</Link>
+                }
             </div>
         </div>
     )

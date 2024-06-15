@@ -3,6 +3,7 @@ import axios from "axios";
 import AuthService from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -17,8 +18,10 @@ const LoginForm = () => {
     };
 
     const navigate = useNavigate();
+    const [isLogin, setIsLogin] = useState(false)
     const login = async () => {
         try {
+            setIsLogin(true)
             const loginResponse = await AuthService.login(email, password);
             localStorage.setItem("token", loginResponse.token);
             localStorage.setItem("user", JSON.stringify(loginResponse.user));
@@ -26,12 +29,14 @@ const LoginForm = () => {
             navigate('/admin')
         } catch (error) {
             toast.error("Login failed");
+        } finally {
+            setIsLogin(false)
         }
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent default form submission
-        login(); // Call login function to initiate login process
+        event.preventDefault();
+        login();
     };
 
     return (
@@ -51,12 +56,18 @@ const LoginForm = () => {
                         <div className="mb-4">
                             <label className="input input-bordered flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
-                                <input onChange={handlePassChange} value={password} type="password" className="grow" placeholder="Kaody miafina"/>
+                                <input onChange={handlePassChange} value={password} type="password" className="grow" placeholder="Kaody miafina" />
                             </label>
                         </div>
                         <div className="flex justify-center gap-3 mt-8">
-                            <button type="submit" className="btn btn-success text-white rounded-full w-28">Hiditra</button>
-                            <button className="btn rounded-full w-28">Hiverina</button>
+                            <button type="submit" className="btn btn-success text-white rounded-full w-28 duration-200">
+                                <span>Hiditra</span>
+                                {
+                                    isLogin &&
+                                    <span className="loading loading-spinner loading-md"></span>
+                                }
+                            </button>
+                            <Link to={"/"} className="btn rounded-full w-28">Hiverina</Link>
                         </div>
                     </div>
                 </div>
