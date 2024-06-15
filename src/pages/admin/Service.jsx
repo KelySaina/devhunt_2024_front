@@ -25,7 +25,7 @@ const Service = () => {
   return (
     <div className='space-y-7'>
       <div>
-        <h1 className='text-4xl first-letter:text-5xl font-bold'>List of all services</h1>
+        <h1 className='text-4xl first-letter:text-5xl font-bold'>Lisitry ny serivisy rehetra</h1>
       </div>
       <div>
         {
@@ -42,7 +42,7 @@ const Service = () => {
                   <h2 className="card-title text-2xl capitalize">{service.name}</h2>
                   <p>{service.description}</p>
                   <div className="card-actions justify-end">
-                    <button onClick={() => handleSubmitDoc(service)} className="btn btn-success">Acceder</button>
+                    <button onClick={() => handleSubmitDoc(service)} className="btn btn-success text-white">Ho jerena</button>
                   </div>
                 </div>
               </div>

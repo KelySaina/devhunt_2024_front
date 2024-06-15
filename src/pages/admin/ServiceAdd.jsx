@@ -143,7 +143,7 @@ const ServiceAdd = () => {
                     <div className="space-y-5">
                         <h1 className="text-xl font-bold">Verification identité requis</h1>
                         <div className="flex justify-between items-center">
-                            <label>Uploader votre carte d'identité national</label>
+                            <label>Télécharger votre carte d'identité national</label>
                             <input type="file" accept="image/*" className="file-input w-full max-w-xs" onChange={handleImageUpload} />
                         </div>
                         <div className="flex justify-center">
@@ -156,7 +156,7 @@ const ServiceAdd = () => {
                         <h1 className="text-xl font-bold">Remplissez le formulaire ci-dessous</h1>
                     </div>
                     <form className="space-y-4" onSubmit={formik.handleSubmit}>
-                        <div className="grid grid-cols-4 space-y-2">
+                        <div className="grid grid-cols-4 space-y-2 gap-x-3">
                             {docsReq.map((doc, index) => (
                                 <label key={index} className="form-control w-full max-w-xs">
                                     <div className="flex justify-between">
