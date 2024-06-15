@@ -71,25 +71,25 @@ const RegistrationForm = () => {
 
     return (
         <div className="space-y-8">
-            <h1 className="text-4xl text-center text-success">Create Account - {`Step ${step}`}</h1>
+            <h1 className="text-4xl text-center text-success">Mamorona kaonty - {`Dingana ${step}`}</h1>
             {step === 1 && (
                 <div className="py-4 px-8">
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Nom</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="firstName">Anarana</label>
                             <input onChange={handleInputChange} value={formData.firstName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="firstName" type="text" placeholder="RANAIVOSON" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Prénoms</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="lastName">Famenon'anarana</label>
                             <input onChange={handleInputChange} value={formData.lastName} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="lastName" type="text" placeholder="Muriel" />
                         </div>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Date de naissance</label>
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="dateOfBirth">Daty nahaterahana</label>
                         <input onChange={handleInputChange} value={formData.dateOfBirth} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="dateOfBirth" type="date" />
                     </div>
                     <div className="flex justify-end mt-8">
-                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleNextClick}>Suivant</button>
+                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleNextClick}>Manaraka</button>
                     </div>
                 </div>
             )}
@@ -97,21 +97,21 @@ const RegistrationForm = () => {
                 <div className="py-4 px-8">
                     <div className="grid grid-cols-2 gap-2">
                         <div className="mb-8">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Username</label>
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">Anaran'ny mpampiasa</label>
                             <input onChange={handleInputChange} value={formData.username} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="username" type="text" placeholder="MurielArii" />
                         </div>
                         <div className="mb-8">
-                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Email</label>
+                            <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">Adiresy Mailaka</label>
                             <input onChange={handleInputChange} value={formData.email} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="email" type="email" placeholder="murielarisoaran@gmail.com" />
                         </div>
                     </div>
                     <div className="flex mb-4">
                         <div className="w-1/2 mr-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="password">Mot de passe</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="password">Teny miafina</label>
                             <input onChange={handleInputChange} value={formData.password} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="password" type="password" />
                         </div>
                         <div className="w-1/2 ml-1">
-                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="confirm_password">Confirmé mot de passe</label>
+                            <label className="block text-grey-darker text-sm mb-2 font-bold" htmlFor="confirm_password">Fanamarinana teny miafina</label>
                             <input onChange={handleInputChange} value={formData.confirm_password} className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" id="confirm_password" type="password" />
                         </div>
                     </div>
@@ -124,7 +124,7 @@ const RegistrationForm = () => {
             {step === 3 && (
                 <div className="py-4 px-8">
                     <div className="mb-8">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email_final">Code de vérification</label>
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email_final">Kaody fanamarinana</label>
                         <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" ref={userCode} type="number" />
                     </div>
                     <div className="flex justify-end mt-8">
