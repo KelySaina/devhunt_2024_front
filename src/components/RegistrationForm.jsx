@@ -116,8 +116,8 @@ const RegistrationForm = () => {
                         </div>
                     </div>
                     <div className="flex justify-between mt-8">
-                        <button className="btn border-success text-dark rounded-full w-28" onClick={handlePreviousClick}>Précédent</button>
-                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleVerification}>Suivant</button>
+                        <button className="btn border-success text-dark rounded-full w-28" onClick={handlePreviousClick}>Teo aloha</button>
+                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleVerification}>Manaraka</button>
                     </div>
                 </div>
             )}
@@ -128,7 +128,7 @@ const RegistrationForm = () => {
                         <input className="appearance-none border rounded w-full py-2 px-3 text-grey-darker" ref={userCode} type="number" />
                     </div>
                     <div className="flex justify-end mt-8">
-                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleSubmit}>Valider</button>
+                        <button className="btn btn-success text-white rounded-full w-28" onClick={handleSubmit}>Hanamarina</button>
                     </div>
                 </div>
             )}
