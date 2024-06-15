@@ -43,48 +43,32 @@ const Navbar = () => {
     return (
         <div className="navbar px-14 shadow-lg pb-5">
             <div className="navbar-start">
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-                    </div>
-                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>Item 1</a></li>
-                        <li>
-                            <a>Parent</a>
-                            <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a>Item 3</a></li>
-                    </ul>
-                </div>
-                <a className="btn btn-ghost text-xl">
+                <div className="btn btn-ghost text-xl">
                     <svg className='w-10 fill-success' viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
                         <path fillRule="evenodd"
                             d="M13.75.5a2.25 2.25 0 00-1.847 3.536l-.933.934a.752.752 0 00-.11.14c-.19-.071-.396-.11-.61-.11h-2.5A1.75 1.75 0 006 6.75v.5H4.372a2.25 2.25 0 100 1.5H6v.5c0 .966.784 1.75 1.75 1.75h2.5c.214 0 .42-.039.61-.11.03.05.067.097.11.14l.933.934a2.25 2.25 0 101.24-.881L12.03 9.97a.75.75 0 00-.14-.11c.071-.19.11-.396.11-.61v-2.5c0-.214-.039-.42-.11-.61a.75.75 0 00.14-.11l1.113-1.113A2.252 2.252 0 0016 2.75 2.25 2.25 0 0013.75.5zM13 2.75a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM7.75 6.5a.25.25 0 00-.25.25v2.5c0 .138.112.25.25.25h2.5a.25.25 0 00.25-.25v-2.5a.25.25 0 00-.25-.25h-2.5zm6 6a.75.75 0 100 1.5.75.75 0 000-1.5zM1.5 8A.75.75 0 113 8a.75.75 0 01-1.5 0z"
                             clipRule="evenodd" />
                     </svg>
                     <label>Citizen<span className="text-success">Connect</span></label>
-                </a>
+                </div>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className=" flex px-10 text-lg">
-                    <LinkSmooth to="header" smooth={true} duration={500}><a className="text-lg m-6 group relative w-max cursor-pointer">
+                    <LinkSmooth to="header" smooth={true} duration={500}><div className="text-lg m-6 group relative w-max cursor-pointer">
                         <span className="hover:text-success">Acceuil</span>
                         <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
                         <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
-                    </a></LinkSmooth>
-                    <LinkSmooth to="about" smooth={true} duration={500}><a className="text-lg m-6 group relative w-max cursor-pointer">
+                    </div></LinkSmooth>
+                    <LinkSmooth to="about" smooth={true} duration={500}><div className="text-lg m-6 group relative w-max cursor-pointer">
                         <span className="hover:text-success">A propos</span>
                         <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
                         <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
-                    </a></LinkSmooth>
-                    <LinkSmooth to="service" smooth={true} duration={500}><a className="text-lg m-6 group relative w-max cursor-pointer">
+                    </div></LinkSmooth>
+                    <LinkSmooth to="service" smooth={true} duration={500}><div className="text-lg m-6 group relative w-max cursor-pointer">
                         <span className="hover:text-success">Services</span>
                         <span className="absolute -bottom-1 left-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
                         <span className="absolute -bottom-1 right-1/2 w-0 transition-all h-0.5 bg-success group-hover:w-3/6"></span>
-                    </a></LinkSmooth>
+                    </div></LinkSmooth>
                 </ul>
             </div>
             <div className="navbar-end gap-3">
