@@ -8,6 +8,7 @@ import Service from "./pages/admin/Service";
 import Setting from "./pages/admin/Setting";
 import ServiceAdd from "./pages/admin/ServiceAdd";
 import Documents from "./pages/admin/Documents";
+import Super from "./pages/admin/Super";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="" element={<Service />} />
             <Route path="service" element={<ServiceAdd />} />
             <Route path="docs" element={<Documents />} />
+            <Route path="super" element={<Super />} />
           </Route>
         </Routes>
       </Router>

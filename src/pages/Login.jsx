@@ -8,7 +8,7 @@ const Login = () => {
     const handleHoverLogin = () => {
         setTimeout(() => {
             setHoverLogin('!translate-x-0')
-            setHoverRegister('!opacity-0')
+            setHoverRegister('!opacity-0 !-z-50')
         }, 500);
     }
     const handleHoverRegister = () => {
