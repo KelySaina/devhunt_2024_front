@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
     const isLogged = localStorage.getItem('token') && localStorage.getItem('user')
     return (
-        <div className="navbar px-14">
+        <div className="navbar px-14 shadow-lg pb-5">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

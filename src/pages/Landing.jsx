@@ -5,7 +5,7 @@ import About from "../components/About"
 import Partenaire from "../components/Partenaire";
 const Landing = () => {
     return (
-        <div>
+        <div className="space-y-16">
             <div className="sticky top-0 bg-base-100 z-50">
                 <Navbar />
             </div>
